@@ -1,0 +1,101 @@
+body {
+    background-color: #120d0d;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fccbf7;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+h1 {
+    color: #ffffff;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.container, .radio-container, .slider-wrapper, .wrapper input[type="submit"] {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #161616;
+    color: #fccbf7;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 800;
+    text-align: left;
+}
+input[type="checkbox"], input[type="radio"] {
+    transform: scale(1.2);
+    margin-right: 10px;
+    cursor: pointer;
+}
+input[type="submit"] {
+    background-color: #f2aceb;
+    border: none;
+    font-size: 1.2em;
+}
+.slider-container {
+    width: 100%;
+    text-align: center;
+}
+.slider-label {
+    color: #fccbf7;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+.slider {
+    width: 90%;
+    margin: 0 auto;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    background: #fccbf7;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+.slider:hover {
+    opacity: 1;
+}
+.slider-value {
+    color: #fccbf7;
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+}
+hr {
+    opacity: 0;
+}
+.loading-spinner {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    display: none;
+    margin: 20px auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.img-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+.img-container img {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    border: none;
+    max-height: 400px;
+}
+@media (min-width: 600px) {
+    .container, .radio-container, .slider-wrapper, .wrapper input[type="submit"] {
+        display: inline-block;
+        width: auto;
+        text-align: center;
+    }
+}
