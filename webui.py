@@ -9,22 +9,39 @@ app = Flask(__name__, static_folder="static", template_folder="templates")
 
 @app.route("/")
 def hello():
-    data = {
+    quality = ""
+    quality_prompts = {
         "High Quality": "high quality high res, 4k hdr",
         "Detailed": "Highly detailed, insane details, sharp image",
         "4k": "4k",
-        
- 
+    }
+    places=""
+    places_prompts = {
+        "In the sky": "in the sky",
+        "in classroom": "in classroom",
+        "In the office": "in the office",
+        "On the floor": "on the floor",
+        "In the corner": "in the corner",
+        "mountain": "In the mountain",
+
     }
 
-    form = ""
-    for label, value in data.items():
-        form += f'''
+
+
+    
+    for label, value in quality_prompts.items():
+        quality += f'''
         <label class="container">
             <input type="checkbox" id="positive" name="option" value="({value})">{label}
         </label>
         '''
-
+    
+    for label, value in places_prompts.items():
+        places += f'''
+        <label class="container">
+            <input type="checkbox" id="positive" name="option" value="({value})">{label}
+        </label>
+        '''
     return '''
     <html>
     <head>
@@ -39,7 +56,12 @@ def hello():
         <h1>Quality Prompt</h1>
         <form id="qualityForm" action="/text2img" method="post">
             <div class="wrapper">
-                ''' + form + '''
+                ''' + quality + '''
+        <h1>Place Prompt</h1>
+
+                ''' + places + '''
+
+            
             </div>
             <div class="slider-container">
                 <div class="slider-wrapper">
