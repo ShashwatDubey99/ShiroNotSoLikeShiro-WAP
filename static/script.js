@@ -1,3 +1,29 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("qualityForm");
+
+    // Load saved values from local storage
+    Array.from(form.elements).forEach(element => {
+        if (element.type === "checkbox") {
+            element.checked = localStorage.getItem(element.id) === "true";
+        } else if (element.type === "range" || element.type === "select-one") {
+            element.value = localStorage.getItem(element.id) || element.value;
+            if (element.type === "range") {
+                updateValue(element.id + '-value', element.value); // Update the display for range inputs
+            }
+        }
+    });
+
+    // Save form values to local storage on change
+    form.addEventListener("input", (event) => {
+        const element = event.target;
+        if (element.type === "checkbox") {
+            localStorage.setItem(element.id, element.checked);
+        } else {
+            localStorage.setItem(element.id, element.value);
+        }
+    });
+});
+
 function updateValue(id, value) {
     document.getElementById(id).innerText = value;
 }
@@ -31,7 +57,7 @@ function submitForm() {
     .then(response => response.json())
     .then(result => {
         console.log('Success:', result);
-        displayImages(result);
+        displayImages(result.image_paths);
         spinner.style.display = 'none'; // Hide loading spinner
     })
     .catch(error => {

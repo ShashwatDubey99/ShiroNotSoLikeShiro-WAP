@@ -53,8 +53,9 @@ def hello():
 
     </head>
     <body>
+    <form id="qualityForm" action="/text2img" method="post">
         <h1>Quality Prompt</h1>
-        <form id="qualityForm" action="/text2img" method="post">
+        
             <div class="wrapper">
                 ''' + quality + '''
         <h1>Place Prompt</h1>
