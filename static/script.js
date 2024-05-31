@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Array.from(form.elements).forEach(element => {
         if (element.type === "checkbox") {
             element.checked = localStorage.getItem(element.id) === "true";
-        } else if (element.type === "range" || element.type === "select-one") {
+        } else if (element.type === "range" || element.type === "select-one" || element.tagName.toLowerCase() === "textarea") {
             element.value = localStorage.getItem(element.id) || element.value;
             if (element.type === "range") {
                 updateValue(element.id + '-value', element.value); // Update the display for range inputs
@@ -31,8 +31,10 @@ function updateValue(id, value) {
 function submitForm() {
     const form = document.getElementById('qualityForm');
     const formData = new FormData(form);
-    const selectedOptions = Array.from(document.querySelectorAll('input[name="option"]:checked'))
-                               .map(option => option.value).join(', ');
+    const selectedOptions = Array.from(document.querySelectorAll('input[id="positive"]:checked'))
+    .map(option => option.value)
+    .concat(document.querySelector('textarea#positive').value)
+    .join(', ');
 
     const data = {
         prompt: selectedOptions,
@@ -57,7 +59,7 @@ function submitForm() {
     .then(response => response.json())
     .then(result => {
         console.log('Success:', result);
-        displayImages(result.image_paths);
+        displayImages(result);
         spinner.style.display = 'none'; // Hide loading spinner
     })
     .catch(error => {
@@ -65,7 +67,6 @@ function submitForm() {
         spinner.style.display = 'none'; // Hide loading spinner
     });
 }
-
 function displayImages(urls) {
     const imageContainer = document.getElementById('image-container');
     imageContainer.innerHTML = ''; // Clear previous images
@@ -74,4 +75,12 @@ function displayImages(urls) {
         img.src = url;
         imageContainer.appendChild(img);
     });
+}
+function toggleTextAreas() {
+    const advancedOptions = document.getElementById('advanced-options');
+    if (document.getElementById('advanced').checked) {
+        advancedOptions.style.display = 'block';
+    } else {
+        advancedOptions.style.display = 'none';
+    }
 }

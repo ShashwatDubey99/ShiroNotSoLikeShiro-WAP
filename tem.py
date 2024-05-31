@@ -5,14 +5,14 @@ def getimgname(prompt_id,url):
       URL=url
       print(URL)
       respons = requests.get(f"{URL}/history/{prompt_id}")
-      print(respons.json()) 
+      n=(respons.json()) 
       f=(respons.json()[prompt_id]["outputs"]['9']["images"])
       a=[]
       for i in f:
           filename = i["filename"]
           subfolder = i["subfolder"]
           folder_type = i["type"]
-          print(URL+"/"+"view?"+get_image(filename, subfolder, folder_type))
+          z=(URL+"/"+"view?"+get_image(filename, subfolder, folder_type))
           a.append(URL+"/"+"view?"+get_image(filename, subfolder, folder_type))
       return a    
 
