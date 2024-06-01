@@ -32,10 +32,10 @@ function submitForm() {
     const form = document.getElementById('qualityForm');
     const formData = new FormData(form);
     const selectedOptions = document.querySelector('textarea#positive').value
-    .concat( Array.from(document.querySelectorAll('input[id="positive"]:checked')))
+    .concat( Array.from(document.querySelectorAll('input[id="positive"]:checked')).map(option => option.value))
    
     
-    .map(option => option.value)
+    
     .join(', ');
     const negativeElements = document.querySelectorAll('input[name="negetive"]:checked');
     const negatives = Array.from(negativeElements).map(el => el.value).join(", ")
