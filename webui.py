@@ -73,17 +73,6 @@ def hello():
     </head>
     <body>
         <form id="qualityForm" action="/text2img" method="post">
-              <label class="container">
-                <input type="checkbox" id="advanced" onclick="toggleTextAreas()"> Advanced
-            </label>
-            <div class="wrapper" id="advanced-options" style="display: none;">
-                <textarea id="positive" name="positive">POSITIVE</textarea>
-                <textarea id="negetive" name="negetive">NEGATIVE</textarea>
-            </div>
-            <div class="wrapper">
-                <input type="button" value="Generate" onclick="submitForm()">
-            </div>
-                      
             <h1>Quality Prompt</h1>
             <div class="wrapper">''' + quality + '''</div>
             <h1>Place Prompt</h1>
@@ -120,6 +109,16 @@ def hello():
                 <option value="1.85:1 cinema 952x512">1.85:1 cinema 952x512</option>
                 <option value="2:1 cinema 1024x512">2:1 cinema 1024x512</option>
             </select> 
+                <label class="container">
+                <input type="checkbox" id="advanced" onclick="toggleTextAreas()"> Advanced
+            </label>
+            <div class="wrapper" id="advanced-options" style="display: none;">
+                <textarea id="positive" name="positive">POSITIVE</textarea>
+                <textarea id="negetive" name="negetive">NEGATIVE</textarea>
+            </div>
+            <div class="wrapper">
+                <input type="button" value="Generate" onclick="submitForm()">
+            </div>
 
         </form>
         <div id="loading-spinner" class="loading-spinner"></div>
@@ -141,7 +140,7 @@ def queue_prompt(prompt, url):
 def textimg(pos,neg, cfg, steps, aspect, batch):
   
         global data
-        data = json.loads(tem.thehell())
+        data = json.load(tem.thehell())
         data["4"]["inputs"]["text"] = pos
         data["5"]["inputs"]["text"] = neg
         data["3"]["inputs"]["cfg"] = cfg
