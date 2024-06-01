@@ -20,6 +20,7 @@ def hello():
         "Detailed": "Highly detailed, insane details, sharp image",
         "4k": "4k",
     }
+    neg=''
     places = ""
     places_prompts = {
         "In the sky": "in the sky",
@@ -29,6 +30,19 @@ def hello():
         "In the corner": "in the corner",
         "In the mountain": "In the mountain",
     }
+    neg_prompts = {
+        "low quality": "low quality",
+        "low res": "low res",
+        "worst quality": "worst quality",
+        "blurry": "blurry",
+        "bad anatomy": "bad anatomy",
+        "bad proportions": "bad proportions",
+        "extra": "extra",
+        "cropped": "cropped",
+        "worst quality": "worst quality",
+        "bad quality": "bad quality",
+        "jpeg artifacts": "jpeg artifacts",
+        "watermark": "watermark",}
 
     for label, value in quality_prompts.items():
         quality += f'''
@@ -43,6 +57,13 @@ def hello():
             <input type="checkbox" id="positive" name="option" value="({value})">{label}
         </label>
         '''
+    for label, value in neg_prompts.items():
+        neg += f'''
+    <label class="container">
+        <input type="checkbox" id="negetive" name="negetive" value="({value})">{label}
+    </label>
+    '''
+
     return render_template_string('''
     <html>
     <head>
@@ -56,6 +77,8 @@ def hello():
             <div class="wrapper">''' + quality + '''</div>
             <h1>Place Prompt</h1>
             <div class="wrapper">''' + places + '''</div>
+            <h1>Negative Prompt</h1>
+            <div class="wrapper">''' + neg + '''</div>
             <div class="slider-container">
                 <div class="slider-wrapper">
                     <label class="slider-label" for="cfg">CFG:</label>
@@ -91,7 +114,7 @@ def hello():
             </label>
             <div class="wrapper" id="advanced-options" style="display: none;">
                 <textarea id="positive" name="positive">POSITIVE</textarea>
-                <textarea id="negative" name="negative">NEGETIVE</textarea>
+                <textarea id="negetive" name="negetive">NEGATIVE</textarea>
             </div>
             <div class="wrapper">
                 <input type="button" value="Generate" onclick="submitForm()">
@@ -114,12 +137,12 @@ def queue_prompt(prompt, url):
     prompt_id = req.json()["prompt_id"]
     print(prompt_id)
 
-def textimg(pos, cfg, steps, aspect, batch):
+def textimg(pos,neg, cfg, steps, aspect, batch):
     with open('static/new.json', 'r+') as f:
         global data
         data = json.load(f)
         data["4"]["inputs"]["text"] = pos
-        data["5"]["inputs"]["text"] = "low quality , blurred , jpg , worst quality"
+        data["5"]["inputs"]["text"] = neg
         data["3"]["inputs"]["cfg"] = cfg
         data["2"]["inputs"]["steps"] = steps
         data["7"]["inputs"]["aspect_ratio"] = aspect
@@ -131,11 +154,12 @@ def textimg(pos, cfg, steps, aspect, batch):
 def text2img():
     data = request.get_json()
     prompt = data.get('prompt', '')
+    neg = data.get('negetive','')
     steps = data.get('steps', '')
     cfg = data.get('cfg', '')
     aspect = data.get('aspect', '')
     batch = data.get('batch', '')
-    textimg(prompt, cfg, steps, aspect, batch)
+    textimg(prompt,neg, cfg, steps, aspect, batch)
     j = requests.get(URL + "/queue")
     j = j.json()
     time.sleep(1)
