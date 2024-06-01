@@ -138,9 +138,9 @@ def queue_prompt(prompt, url):
     print(prompt_id)
 
 def textimg(pos,neg, cfg, steps, aspect, batch):
-    with open('static/new.json', 'r+') as f:
+  
         global data
-        data = json.load(f)
+        data = json.loads(tem.thehell())
         data["4"]["inputs"]["text"] = pos
         data["5"]["inputs"]["text"] = neg
         data["3"]["inputs"]["cfg"] = cfg
