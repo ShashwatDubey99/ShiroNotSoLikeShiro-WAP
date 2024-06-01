@@ -31,12 +31,14 @@ function updateValue(id, value) {
 function submitForm() {
     const form = document.getElementById('qualityForm');
     const formData = new FormData(form);
-    const selectedOptions = document.querySelector('textarea#positive').value
-    .concat( Array.from(document.querySelectorAll('input[id="positive"]:checked')).map(option => option.value))
-   
+    const Options = Array.from(document.querySelectorAll('input[id="positive"]:checked'))
     
+    .map(option => option.value)
     
     .join(', ');
+    const selectedOptions=document.querySelector('textarea#positive').value
+    .concat(Options);
+
     const negativeElements = document.querySelectorAll('input[name="negetive"]:checked');
     const negatives = Array.from(negativeElements).map(el => el.value).join(", ")
     .concat(document.querySelector('textarea#negetive').value);
